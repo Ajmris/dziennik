@@ -1,0 +1,110 @@
+/*
+  Globalne stylizacje strony
+*/
+body {
+  font-family: Arial, sans-serif;
+  color: orange;
+  margin: 0;
+  background-image: url('../tapeta.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+/*
+  Nagłówek strony
+*/
+header {
+  background-color: #801a00;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+header h1 {
+  color: white;
+  font-size: 50px;
+  margin: 0;
+}
+/*
+  Prawy panel nagłówka
+*/
+#prawy {
+  float: right;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: #b33c00;
+  border-radius: 5%;
+}
+#prawy li {
+  display: inline-block;
+  position: relative;
+}
+#prawy a {
+  display: block;
+  padding: 5px;
+  color: white;
+  text-decoration: none;
+}
+#prawy a:hover {
+  background-color: #b33c00;
+}
+#prawy ul {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: #b33c00;
+  padding: 0;
+  display: none;
+}
+#prawy li:hover ul {
+  display: block;
+}
+#prawy ul li {
+  display: block;
+  width: 150px;
+}
+#prawy ul li a {
+  display: block;
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+}
+#prawy ul li a:hover {
+  background-color: #c84d00;
+}
+/*
+  Sekcja główna strony
+*/
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+/*
+  Tabela z ocenami
+*/
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 20px;
+  font-weight: 700;
+}
+th, td {
+  border: 1px solid #dddddd;
+  padding: 8px;
+  text-align: left;
+}
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+/*
+  Stopka strony
+*/
+footer {
+  background-color: #333333;
+  color: white;
+  padding: 20px;
+}

@@ -1,0 +1,90 @@
+#logo, #bRight {
+    width: 25%;
+    height: 100%;
+    float: left;
+}
+#bCenter {
+    width: 50%;
+    float: left;
+    height: 100%;
+}
+#baner{
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    background-color: #801a00;
+    top: 0;
+}
+#main{
+    margin-top: 50px;
+    padding-top: 10%;
+    width: 100%;
+    clear: both;
+    text-align: center;
+    background-color: whitesmoke;
+    padding-bottom: 10%;
+}
+#stopka {
+    width: 100%;
+    clear: both;
+    background-color: gray;
+    color: whitesmoke;
+    font-size: 20px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    
+    
+}
+#wew {
+    width: 20%;
+    margin-left: 40%;
+    text-align: center;
+    border-radius: 30px;
+    border: 2px solid whitesmoke;
+    padding-top: 70px;
+    background-color: black;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: whitesmoke;
+}
+input {
+    width: 80%;
+}
+#loginbtn {
+    width: 30%;
+    background-color: black;
+    border-radius: 5px;
+    border: solid 1px whitesmoke;
+    color: whitesmoke;
+}
+.binput {
+    text-align: left;
+    padding-left: 30px;
+}
+#wew img {
+    width: 100px;
+}
+
+.header-img {
+    height: 40px;
+    width: 40px;
+    float: left;
+    padding-left: 100px;
+    }
+
+    div h1 {
+        display: inline;
+        color: whitesmoke;
+        }
+
+        #wew a {
+            padding-right: 20px;
+            color: white;
+            text-decoration: none;
+        }
+
+        a{
+            text-decoration: none;
+        }
+
+        *{
+            margin: 5px;
+        }

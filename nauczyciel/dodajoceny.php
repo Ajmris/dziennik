@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volcano - Twój dziennik elektroniczny</title>
+    <link rel="stylesheet" href="../Styles/uczen.css?v=1.1">
+</head>
+<body>
+    <?php
+    require_once '../start.php';
+    ?>
+    <div id="baner">
+        <div id="links">
+            <a href="#">Organizacja</a>
+            <a href="#">Uczeń</a>
+            <a href="#">Ankiety</a>
+            <a href="#">Ustawienia</a>
+            <a href="#">Pomoc</a>
+            <a href="../wyloguj.php">Wyloguj</a>
+        </div>
+    </div>
+    <div id="baner2">
+        <div id="logo">
+            <img src="../Logo.png" alt="logo">
+        </div>
+        <div id="menu">
+            <div class="icon"><a href="dodajoceny.php"><img src="./icons/Oceny.png" alt="Oceny"></a></div>
+            <div class="icon"><a href="#"><img src="./icons/Frekwencja.png" alt="Frekwencja"></a></div>
+            <div class="icon"><a href="#"><img src="./icons/Wiadomosci.png" alt="Wiadomości"></a></div>
+            <div class="icon"><a href="#"><img src="./icons/Ogloszenia.png" alt="Ogłoszenia"></a></div>
+            <div class="icon"><a href="#"><img src="./icons/Zadania domowe.png" alt="Zadania Domowe"></a></div>
+        </div>
+    </div>
+    <div id="main">
+        <form id="form" method="get">
+            <select name="klasa" onchange="this.form.submit()">
+                <option>brak</option>
+                <?php
+                    require_once "../start.php";
+
+                    $result = $link->query("SELECT DISTINCT `klasa` FROM `users`");
+                    while($row = $result->fetch_array()){
+                        echo "<option>".$row[0]."</option>";
+                    }
+                ?>
+            </select>
+        </form>
+        <?php
+            if(isset($_GET['klasa'])) {
+            $result = $link->query("SELECT `imie`, `nazwisko`, `id` FROM `users` WHERE `klasa` = '$_GET[klasa]'");
+            while($row = $result->fetch_array()) {
+                echo "<div class='uczen'>".$row[0]." ".$row[1]."<form method='get' action='dodaj.php'><input type='submit' value='Dodaj ocene'><input name='id' type='hidden' value='".$row[2]."'></form></div>";
+            }
+        }
+        ?>
+    </div>
+    <div id="stopka">
+        <hr />
+    </div>
+</body>
+</html>
