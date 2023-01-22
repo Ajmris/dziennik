@@ -25,9 +25,9 @@
         </ul>
       </li>
     </ol>
-  </div>
-  
+  </div>  
 </header>
+
 <main>
   <h3>Dziennik elektroniczny dla uczniów i nauczycieli.</h3>
   <hr>
@@ -62,6 +62,7 @@
         echo '<span style="color:red;">Nie ma takiej klasy w szkole</span>';
       }else{
 echo<<<END
+	<h3>Oto uczniowie klasy $klasa:</h3>
   <table>
     <thead>
       <tr>
@@ -80,7 +81,8 @@ echo<<<END
     <tbody>
   </table>
 END;
-      }
+    include 'dodaj ucznia.php';
+    }
       mysqli_close($conn);
     }
   }
