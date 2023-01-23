@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Dziennik szkolny wyświetla klasy, uczniów, oceny i wiadomości.">
     <meta name="author" content="Szymon Tarasiewicz">
-  <meta name="keywords" content="dziennik, php, mysql"> 
+    <meta name="keywords" content="dziennik, php, mysql"> 
     <title>Dziennik elektroniczny</title>
     <link rel="stylesheet" href="./Styles/openai-chat-style.css">
     <script src="Scripts/mainPage.js"></script>
@@ -29,6 +29,7 @@
 </header>
 
 <main>
+<main>
   <h3>Dziennik elektroniczny dla uczniów i nauczycieli.</h3>
   <hr>
   <H2>
@@ -46,19 +47,15 @@
       echo '<span style="color: darkblue;">Nie podano nazwy klasy</span>';
     }else{
       require_once "dbconnect.php";
-      $conn = mysqli_connect($host, $user, $password, $db);
-      mysqli_set_charset($conn, "utf8");
-      if (!$conn) {
-        die('Połączenie nieudane: '.mysqli_connect_error());
-      }
-    
       // Pobranie danych o uczniach z konkretnej klasy
       $klasa = $_POST["klasa"];
-      $query = "SELECT imie, nazwisko, sr_ocen FROM uczniowie, klasy
-      WHERE klasa='$klasa' AND klasy.id = uczniowie.klasa_id";
-      $result = mysqli_query($conn, $query) or die("Problemy z odczytaniem danych!");
-      $ile=mysqli_num_rows($result);
-      if($ile==0){
+      $query = "SELECT imie, nazwisko, sr_ocen FROM uczniowie JOIN klasy ON klasy.id = uczniowie.klasa_id WHERE klasa=:klasa";
+      $stmt = $pdo->prepare($query);
+      $stmt->bindParam(':klasa', $klasa, PDO::PARAM_STR);
+      $stmt->execute();
+      $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      if(count($rows) == 0){
         echo '<span style="color:red;">Nie ma takiej klasy w szkole</span>';
       }else{
 echo<<<END
@@ -73,7 +70,7 @@ echo<<<END
     </thead>
     <tbody>
 END;
-        while($row=mysqli_fetch_assoc($result)){
+        foreach($rows as $row){
           echo "<tr><td>".$row['imie']."</td><td>".$row['nazwisko'].
           "</td><td>".$row['sr_ocen']."</td></tr>";
         }
@@ -83,7 +80,6 @@ echo<<<END
 END;
     include 'dodaj ucznia.php';
     }
-      mysqli_close($conn);
     }
   }
 ?>

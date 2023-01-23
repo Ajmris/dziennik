@@ -14,8 +14,9 @@ echo<<<END
 END;
 
   $query2 = "SELECT id FROM klasy WHERE klasa='$klasa'";
-  $result2 = mysqli_query($conn, $query2) or die("Problemy z odczytaniem danych!");
-  $row2=mysqli_fetch_assoc($result2);
+  $stmt = $pdo->prepare($query2);
+  $stmt->execute();
+  $row2 = $stmt->fetch(PDO::FETCH_ASSOC);
   $id_klasy=$row2["id"];
   echo $id_klasy;
 
@@ -28,13 +29,18 @@ END;
     echo $imie.", ".$nazwisko.", ".$sr_ocen.", ".$klasa; 
 
     //sprawdzenie czy podano wszystkie dane
-    if(empty($imie) || empty($nazwisko) || empty($sr_ocen) || empty($id_klasy)){
-	  echo '<span style="color:red;">Proszę podać wszystkie dane</span>';
+    if(empty($imie) || empty($nazwisko) || empty($sr_ocen)){
+	    echo '<span style="color:red;">Proszę podać wszystkie dane!</span>';
 	  }else{
 		  //zapisanie danych do bazy danych
-	    $query3 = "INSERT INTO uczniowie (imie, nazwisko, sr_ocen, klasa_id) VALUES ('$imie', '$nazwisko', '$sr_ocen', '$id_klasy')";
-			mysqli_query($conn, $query3) or die("Nie udało się dodać ucznia");
-	    echo '<span style="color:green;">Uczeń został pomyślnie dodany</span>';
+	    $query3 = "INSERT INTO uczniowie (imie, nazwisko, sr_ocen, klasa_id) VALUES(:imie, :nazwisko, :sr_ocen, $klasa)";
+      $stmt = $pdo->prepare($query3);
+      $stmt->bindValue(':imie', $imie, PDO::PARAM_STR);
+      $stmt->bindValue(':nazwisko', $nazwisko, PDO::PARAM_STR);
+      $stmt->bindValue(':sr_ocen', $sr_ocen, PDO::PARAM_STR);
+
+      $stmt->execute();
+			echo '<span style="color:green;">Uczeń został pomyślnie dodany</span>';
 	  }
   }
 ?>
