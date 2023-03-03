@@ -49,7 +49,8 @@
       require_once "dbconnect.php";
       // Pobranie danych o uczniach z konkretnej klasy
       $klasa = $_POST["klasa"];
-      $query = "SELECT imie, nazwisko, sr_ocen FROM uczniowie JOIN klasy ON klasy.id = uczniowie.klasa_id WHERE klasa=:klasa";
+      $query = "SELECT imie, nazwisko, sr_ocen, klasa_id FROM uczniowie JOIN klasy
+      ON klasy.id = uczniowie.klasa_id WHERE klasa=:klasa";
       $stmt = $pdo->prepare($query);
       $stmt->bindParam(':klasa', $klasa, PDO::PARAM_STR);
       $stmt->execute();
@@ -77,9 +78,27 @@ END;
 echo<<<END
     <tbody>
   </table>
+
+  <h3><span>Dodaj ucznia do klasy: $klasa
 END;
-    include 'dodaj ucznia.php';
-    }
+ECHO " Id tej klasy to: ".$row['klasa_id'].", jeśli chcesz dodać ucznia do tej klasy wpisz nr. id w formularzu.</span>";
+ECHO<<<END
+</h3>
+  <!--przycisk do wyświetlenia formularza-->
+  <button id="add-student-btn" onclick="showAddStudentForm()">Dodaj ucznia</button>
+  
+  <!--formularz do dodawania ucznia-->
+  <form id="add-student-form" action="dodaj ucznia.php" method="post" style="display: none;">
+    <label>Imię: <input type="text" name="imie"></label>
+    <label>Nazwisko: <input type="text" name="nazwisko"></label>
+    <label>Średnia ocen: <input type="text" name="sr_ocen"></label>
+    <label>Klasa_id: <input type="text" name="klasa_id"></label>
+    <input type="submit" name="insert" value="Dodaj ucznia">
+  </form>  
+END;
+  
+  include 'dodaj ucznia.php';
+      }
     }
   }
 ?>
@@ -91,5 +110,8 @@ END;
     </video>
   </div>
 </main>
+<script>
+  
+</script>
 </body>
 </html>
