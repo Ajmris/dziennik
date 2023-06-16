@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    depends_on:
+      - db
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_DATABASE: dziennik_szkolny
+      MYSQL_USER: root

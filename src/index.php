@@ -29,7 +29,6 @@
 </header>
 
 <main>
-<main>
   <h3>Dziennik elektroniczny dla uczniów i nauczycieli.</h3>
   <hr>
   <H2>
@@ -41,24 +40,27 @@
     </form>
   </H2>
   <?php
-  if(isset($_POST["klasa"])){
+    if(isset($_POST["klasa"])){
 
-    if(empty($_POST["klasa"])){
-      echo '<span style="color: darkblue;">Nie podano nazwy klasy</span>';
-    }else{
-      require_once "dbconnect.php";
-      // Pobranie danych o uczniach z konkretnej klasy
-      $klasa = $_POST["klasa"];
-      $query = "SELECT imie, nazwisko, sr_ocen, klasa_id FROM uczniowie JOIN klasy
-      ON klasy.id = uczniowie.klasa_id WHERE klasa=:klasa";
-      $stmt = $pdo->prepare($query);
-      $stmt->bindParam(':klasa', $klasa, PDO::PARAM_STR);
-      $stmt->execute();
-      $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-      if(count($rows) == 0){
-        echo '<span style="color:red;">Nie ma takiej klasy w szkole</span>';
+      if(empty($_POST["klasa"])){
+        echo '<span style="color: darkblue;">Nie podano nazwy klasy</span>';
       }else{
+        require_once "dbconnect.php";
+        // Pobranie danych o uczniach z konkretnej klasy
+        $klasa = $_POST["klasa"];
+        $query = "SELECT imie, nazwisko, sr_ocen, klasa_id FROM uczniowie
+        JOIN klasy ON klasy.id=uczniowie.klasa_id WHERE klasy.nazwa=:klasa
+        ORDER BY nazwisko";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':klasa', $klasa, PDO::PARAM_STR);
+        $stmt->execute();
+        var_dump($klasa);
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if(count($rows) == 0){
+          echo '<span style="color:red;">Nie ma takiej klasy w szkole</span>';
+        }else{
 echo<<<END
 	<h3>Oto uczniowie klasy $klasa:</h3>
   <table>
@@ -71,33 +73,33 @@ echo<<<END
     </thead>
     <tbody>
 END;
-        foreach($rows as $row){
-          echo "<tr><td>".$row['imie']."</td><td>".$row['nazwisko'].
-          "</td><td>".$row['sr_ocen']."</td></tr>";
-        }
+          foreach($rows as $row){
+            echo "<tr><td>".$row['imie']."</td><td>".$row['nazwisko'].
+            "</td><td>".$row['sr_ocen']."</td></tr>";
+          }
 echo<<<END
-    <tbody>
+    </tbody>
   </table>
 
-  <h3><span>Dodaj ucznia do klasy: $klasa.</span></h3>
+  <h3><span>Dodaj ucznia do klasy: $klasa</span></h3>
   <!--przycisk do wyświetlenia formularza-->
   <button id="add-student-btn" onclick="showAddStudentForm()">Dodaj ucznia</button>
   <!--formularz do dodawania ucznia-->
   <form id="add-student-form" action="dodaj ucznia.php" method="post" style="display: none;">
     <label>Imię: <input type="text" name="imie"></label>
     <label>Nazwisko: <input type="text" name="nazwisko"></label>
-    <label>Średnia ocen: <input type="text" name="sr_ocen"></label>
-    <label><input type="hidden" name="klasa_id" value='$row[klasa_id]'></label>
+    <label>Średnia ocen: <input type="number" step="0.1" name="sr_ocen"></label>
+    <label><input type="hidden" name="klasa_id" value="{$row['klasa_id']}"></label>
     <input type="submit" name="insert" value="Dodaj ucznia">
   </form>  
 END;
   
-  include 'dodaj ucznia.php';
+      include 'dodaj ucznia.php';
       }
     }
   }
-?>
-    <hr>
+  ?>
+  <hr>
   <div id="video"> 
     <h1>Przykładowy film:</h1>
     <video width="960" height="720" autoplay controls>
@@ -107,7 +109,6 @@ END;
 </main>
 <script>
   const klasa=document.getElementById('klasa')
-
 </script>
 </body>
 </html>

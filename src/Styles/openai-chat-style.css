@@ -103,7 +103,10 @@ tr:nth-child(even) {
 h3{
   background-color: #333333;
   border-style: inset;
-  border-color: aliceblue;
+  border-color: #3c678c;
+  padding: 8px;
+  font-size: 30px;
+  color: #eab61c;
 }
 /*
   Stopka strony

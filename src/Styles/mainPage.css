@@ -110,6 +110,9 @@ main{
   padding-right: 20%;
   align-items: center;
 }
+main>h3{
+  
+}
 table{
   font-size: 40px;
   border-spacing: 0;
